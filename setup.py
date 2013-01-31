@@ -37,6 +37,13 @@ setup(name='sure',
     author_email='gabriel@nacaolivre.org',
     url='http://github.com/gabrielfalcao/sure',
     packages=get_packages(),
+    entry_points={
+        'console_scripts': ['sure = sure.bin:main'],
+    },
+
     install_requires=[
     ],
+    package_data={
+        'sure': ['COPYING', '*.md'],
+    },
 )

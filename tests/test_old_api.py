@@ -396,9 +396,7 @@ def test_that_checking_each_matches():
 
 def test_that_raises():
     "that(callable, with_args=[arg1], and_kwargs={'arg2': 'value'}).raises(SomeException)"
-
     called = False
-    global called
 
     def function(arg1=None, arg2=None):
         global called
@@ -419,6 +417,7 @@ def test_that_raises():
         assert False, 'should not reach here'
 
     finally:
+        global called
         assert called
         called = False
 
@@ -889,7 +888,7 @@ def test_depends_on_failing_due_nothing_found():
     from sure import action_for, scenario
 
     fullpath = os.path.abspath(__file__).replace('.pyc', '.py')
-    error = 'the action "lonely_action" defined at %s:898 ' \
+    error = 'the action "lonely_action" defined at %s:897 ' \
         'depends on the attribute "something" to be available in the' \
         ' context. It turns out that there are no actions providing ' \
         'that. Please double-check the implementation' % fullpath
@@ -915,10 +914,10 @@ def test_depends_on_failing_due_not_calling_a_previous_action():
     from sure import action_for, scenario
 
     fullpath = os.path.abspath(__file__).replace('.pyc', '.py')
-    error = 'the action "my_action" defined at {0}:928 ' \
+    error = 'the action "my_action" defined at {0}:927 ' \
         'depends on the attribute "some_attr" to be available in the context.'\
         ' You need to call one of the following actions beforehand:\n' \
-        ' -> dependency_action at {0}:924'.replace('{0}', fullpath)
+        ' -> dependency_action at {0}:923'.replace('{0}', fullpath)
 
     def with_setup(context):
         @action_for(context, provides=['some_attr'])

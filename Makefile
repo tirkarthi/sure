@@ -12,6 +12,7 @@ test:
 	@nosetests -s --verbosity=2 tests
 	@steadymark OLD_API.md
 	@steadymark README.md
+	@./sure/bin.py
 
 clean:
 	@printf "Cleaning up files that are already in .gitignore... "
