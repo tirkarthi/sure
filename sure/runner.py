@@ -25,9 +25,6 @@ from sure import importer
 from sure.reporter import Reporter
 
 
-_suites = {}
-
-
 def stripped(string):
     return "\n".join(filter(bool, [s.strip() for s in string.splitlines()]))
 
@@ -53,7 +50,7 @@ class TestCaseResult(TestResult):
         if self.is_error:
             return self.error.printable()
         elif self.is_failure:
-            return traceback.format_exception(*self.error)
+            return "\n".join(traceback.format_exception(*self.error))
         else:
             return ""
 
