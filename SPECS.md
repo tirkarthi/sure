@@ -44,13 +44,11 @@ documentation).
 
 ## Predicates
 
-Sometimes it might be useful to execute python code that will
-instantiate classes, prepare data fixtures or even spin up his own
-http server serving fake data.
-
-Before running the assertions, the developer might want to execute
-code that will instantiate classes, prepare data fixtures or even spin
-up his own http server serving fake data.
+Sometimes it might be useful to execute arbitrary python code before
+running specifications along with its expectations. Maybe classes must
+be instantiated, or a data store must be prepared, data fixtures setup
+or even something more laborated like spinning up a http server that
+will serve fake data.
 
 In order to leverage this, sure also looks for python callables (just
 like it does for ["specifications"](./ref/to/specifications)) although
