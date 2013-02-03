@@ -18,14 +18,13 @@
 from couleur import Shell
 
 import sure
-import traceback
 from sure.reporter import Reporter
 
 
 sh = Shell()
 
-checkmark = ur' \u2714'.encode('utf-8')
-ballot = ur' \u2718'.encode('utf-8')
+checkmark = unicode(r' \u2714', 'utf-8')
+ballot = unicode(r' \u2718', 'utf-8')
 
 
 class SpecReporter(Reporter):

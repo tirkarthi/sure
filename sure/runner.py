@@ -29,7 +29,7 @@ def stripped(string):
     return "\n".join(filter(bool, [s.strip() for s in string.splitlines()]))
 
 
-class TestResult(object):
+class Result(object):
     def __init__(self, results):
         self.results = results
 
@@ -41,7 +41,7 @@ class TestResult(object):
         return all([x.ok for x in self.results])
 
 
-class TestCaseResult(TestResult):
+class TestCaseResult(Result):
     def __init__(self, case, error=None):
         self.case = case
         self.error = error
@@ -71,11 +71,11 @@ class TestCaseResult(TestResult):
         return self.is_success
 
 
-class TestSuiteResult(TestResult):
+class TestSuiteResult(Result):
     pass
 
 
-class FinalTestSuiteResult(TestResult):
+class FinalTestSuiteResult(Result):
     pass
 
 
