@@ -9,9 +9,11 @@ Sure enforces some software engineering techniques to make the
 destination code more decoupled and clean. Mostly through testing
 small units of logic.
 
-It is known that code written through TDD can be a lot cleaner and
-more robust when covered with unit tests. Sure is an attempt to make
-writing unit tests a more pleasant experience for python developers.
+It is known that code written through
+[TDD](http://en.wikipedia.org/wiki/Test-driven_development) can be a
+lot cleaner and more robust when covered with unit tests. Sure is an
+attempt to make writing unit tests a more pleasant experience for
+python developers.
 
 In sure tests tests are referred as "specifications" or "spec", and it
 is grouped in "suites" that are surrounded by actions taken before and/or
@@ -24,9 +26,57 @@ that is using sure to write its tests should be concerned about
 writing decoupled code, and therefore writing a single test per
 behavior unit is important.
 
+## Behavior units
 
+Unit tests by definition test small units of code, and because of that
+then can't perform any sort of I/O (i.e: database access).
 
-## Python files
+The side effect of shaping the code to be tested in smalled units is
+that the code itself ends up decoupled and modularized.
+
+One of the ways to achieve such a simple code is to avoid having too
+many behavior units.
+
+Every single conditional and every single loop is considered a
+behavior unit.
+
+Each specification is supposed to test only a single behavior unit,
+therefore code inside loops must be decoupled in single methods or
+functions, so they can be isolated in a separated specification.
+
+Sure also provides test coverage support out of the box although it
+has to be kept in mind that the coverage module works in a per-line
+basis rather than in a per-instruction.
+
+The code below shows an example of how even 100% of test coverage of a
+codebase will never be enough since sometimes an entire conditional
+might be composed of more than one smaller subconditions:
+
+```python
+if condition1 is True or condition2 is True:
+   # run some algorithm
+```
+
+In the code above if the condition1 is met, the behavior of the
+condition2 cannot be assured, and it must be tested in a separated
+specification.
+
+It's important to have in mind that overachieving test coverage
+ultimately helps achieving true full test coverage and therefore
+cleaningness and modularity.
+
+### Examples of behavior units:
+
+```python
+class SomeClass(object):
+    def some_method(self, parameter1):
+        if parameter1.endswith("OKAY"):
+            # here is one behavior unit
+        else:
+            # here is another behavior unit
+```
+
+## A test language made in python
 
 Although sure is a
 [DSL](http://en.wikipedia.org/wiki/Domain-specific_language), it's
