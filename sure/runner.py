@@ -23,10 +23,17 @@ import traceback
 
 from sure import importer
 from sure.reporter import Reporter
+from mock import Mock
 
 
 def stripped(string):
     return "\n".join(filter(bool, [s.strip() for s in string.splitlines()]))
+
+
+class SpecContext(object):
+    def __init__(self, reporter):
+        self.mock = Mock()
+        self.reporter = reporter
 
 
 class Result(object):
@@ -99,8 +106,14 @@ class TestSuite(object):
     def run(self, reporter):
         results = []
         for case in self.testcases:
+            context = SpecContext(reporter)
+
             reporter.on_test(case)
-            result = case.run(reporter)
+            self.run_predicates(context)
+
+            result = case.run(context)
+
+            self.run_complements(context)
             results.append(result)
 
             if result.is_error:
@@ -115,6 +128,12 @@ class TestSuite(object):
             reporter.on_test_done(case, result)
 
         return TestSuiteResult(results)
+
+    def run_predicates(self, context):
+        pass
+
+    def run_complements(self, context):
+        pass
 
 
 class ErrorStack(object):
@@ -135,9 +154,19 @@ class TestCase(object):
         self.object = class_or_callable
         self.suite = suite
 
-    def run(self, reporter):
+    def run_object(self, context):
+        # TODO classes must be handled here
+
+        # maybe sure should have a `Callable` class that just takes a
+        # context and abstracts the way to call the callable.
+        if self.object.func_code.co_argcount == 1:
+            return self.object(context)
+        else:
+            return self.object()
+
+    def run(self, context):
         try:
-            self.object()
+            self.run_object(context)
         except AssertionError:
             return TestCaseResult(self, sys.exc_info())
         except:
@@ -151,15 +180,16 @@ class Runner(object):
 
     def __init__(self, base_path, reporter_name, plugin_paths=None, **kwargs):
         self.base_path = base_path
-        self.plugin_paths = plugin_paths or []
-
-        self.reporter = Reporter.from_name_and_runner(reporter_name, self)
+        self.reporter = self.get_reporter(reporter_name)
 
         for k in kwargs:
             setattr(self, k, kwargs.get(k))
 
     def __repr__(self):
-        return u'<Runner: {}>'.format(self.base_path)
+        return u'<Runner: {} {}>'.format(self.base_path, self.reporter)
+
+    def get_reporter(self, name):
+        return Reporter.from_name_and_runner(name, self)
 
     def find_candidates(self, lookup_paths):
         candidate_modules = []
@@ -174,8 +204,7 @@ class Runner(object):
         except AttributeError:
             return
         else:
-
-            return re.search(r'(^Test|^Spec|Spec$|Test$)', name, re.I)
+            return re.search(r'(^Ensure|^Test|^Spec|Spec$|Test$)', name, re.I)
 
     def extract_members(self, candidate):
         all_members = [m[1] for m in inspect.getmembers(candidate)]

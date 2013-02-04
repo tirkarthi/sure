@@ -38,13 +38,22 @@ class Reporter(object):
 
     * [`on_start()`](@sure.reporter.Reporter.on_start)
     * [`on_suite(suite)`](@sure.reporter.Reporter.on_suite)
-
+    * [`on_suite_done(suite, result)`](@sure.reporter.Reporter.on_suite_done)
+    * [`on_test(test)`](@sure.reporter.Reporter.on_test)
+    * [`on_test_done(test, result)`](@sure.reporter.Reporter.on_test_done)
+    * [`on_failure(test, error)`](@sure.reporter.Reporter.on_failure)
+    * [`on_error(test, error)`](@sure.reporter.Reporter.on_error)
+    * [`on_success(test)`](@sure.reporter.Reporter.on_success)
+    * [`on_finish()`](@sure.reporter.Reporter.on_finish)
     """
     __metaclass__ = MetaReporter
     name = None
 
     def __init__(self, runner):
         self.runner = runner
+
+    def __repr__(self):
+        return '<{}>'.format(self.__class__.__name__)
 
     def on_start(self):
         """### `def on_start()`
@@ -258,14 +267,8 @@ class Reporter(object):
         ```python
         reporter = Reporter.from_name_and_runner('spec', runner)
         ```"""
-        importer.load_recursive(os.path.join(__path__, 'reporters'), ignore_errors=False)
-
-        # loading each given plugin folder
-        plugin_paths = runner.plugin_paths
-        if isinstance(plugin_paths, basestring):
-            plugin_paths = [plugin_paths]
-
-        for plugin_path in plugin_paths:
-            importer.load_recursive(plugin_path, ignore_errors=True)
-
+        importer.load_recursive(
+            os.path.join(__path__, 'reporters'),
+            ignore_errors=False,
+        )
         return cls.from_name(name)(runner)

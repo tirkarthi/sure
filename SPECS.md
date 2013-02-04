@@ -180,10 +180,23 @@ def finally_clean_up_the_unecessary_memory(spec):
     del spec.foobar
 ```
 
-# Spec mocks (todo)...
+# Spec mocks
 
-    return_value = module_being_tested.some_method(spec.mock.sys)
+Every predicate, specification and complement is called by default
+with a contextual object that can be monkey patched with test payload.
 
-    return_value.should.equal("expected value")
+Although it already come with a few attributes and methods by default,
+one of them is `spec.mock`.
 
-    spec.mock.sys
+`spec.mock` is a shorthand for a new instance of a
+[Mock](http://www.voidspace.org.uk/python/mock/), so it can be used as
+follows:
+
+```python
+def ensure_print_green_behavior(spec)
+    "the function `print_green` prints ANSI green colored strings in a file-like object"
+
+    show(spec.mock.file, "some string")
+
+    spec.mock.file.write.assert_called_once_with(\033[1;32m"some string\033[0m\n")
+```

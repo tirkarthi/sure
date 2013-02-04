@@ -23,8 +23,8 @@ from sure.reporter import Reporter
 
 sh = Shell()
 
-checkmark = unicode(r' \u2714', 'utf-8')
-ballot = unicode(r' \u2718', 'utf-8')
+checkmark = '\xe2\x9c\x94'
+ballot = '\xe2\x9c\x99'
 
 
 class SpecReporter(Reporter):
