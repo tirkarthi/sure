@@ -1,8 +1,38 @@
 # Writing specs with sure
 
+Sure comes with its own [DSL](http://en.wikipedia.org/wiki/Domain-specific_language) for writing tests in python.
+
+Its main goal is to leverage fluency and expressivity while writing
+automated tests in the python programming language.
+
+Sure enforces some software engineering techniques to make the
+destination code more decoupled and clean. Mostly through testing
+small units of logic.
+
+It is known that code written through TDD can be a lot cleaner and
+more robust when covered with unit tests. Sure is an attempt to make
+writing unit tests a more pleasant experience for python developers.
+
+In sure tests tests are referred as "specifications" or "spec", and it
+is grouped in "suites" that are surrounded by actions taken before and/or
+after a set of tests (predicates and complements).
+
+Each specification is meant to test one single behavior unit. "Sure"
+is simply a python library so a developer could circunvent its
+proposed practices, but it's important to reinforce that a developer
+that is using sure to write its tests should be concerned about
+writing decoupled code, and therefore writing a single test per
+behavior unit is important.
+
+
+
 ## Python files
 
-Sure provides a simple DSL for writing specifications.
+Although sure is a
+[DSL](http://en.wikipedia.org/wiki/Domain-specific_language), it's
+nothing but just python code. Sure will work with any python above
+version 2.6 but it works better with the default implementation
+[CPython](http://en.wikipedia.org/wiki/CPython).
 
 ## Specifications
 
@@ -37,10 +67,9 @@ class EnsureAFewBehaviorUnits(sure.Spec):
 
 Expectations nothing but python calls that will raise `AssertionError`
 exceptions, it could be achieved by simple making `assert` calls or
-use [3rd party libraries](/sure/with/nose/py.test/should_dsl) but sure
+use [3rd party libraries](SPECS.md#3rd-party-libraries) but sure
 itself is an assertion library that
-[leverages fluency and expressivity](/path/to/sure expectations
-documentation).
+[leverages fluency and expressivity](SPECS.md#expectations).
 
 ## Predicates
 
@@ -61,26 +90,47 @@ code is executed before each specification. Many predicates might be
 defined per python file, they are executed in the same order they were
 declared.
 
-Examples:
+### Examples:
 
 ```python
-def ensuring_some_class():
+def ensuring_some_class(spec):
     u"The class Foobar"
+    spec.foobar = FooBar()
 
 
-def ensure_it_has_a_method_that_prints():
+def ensure_it_has_a_method_that_prints(spec):
     "its method '.uppercase(string)' takes a string and makes it supercased"
 
     FooBar.uppercase("whatever").should.equal("WHATEVER")
+    spec.foobar.uppercase("foo").should.equal("FOO")
 ```
 
-# TODO:
+## Complements
 
-Write about teardown, come out with a term that suits its counterpart
-"predicate".
+If in one hand predicates leverage setting up a test environment, its
+counterpart "complement" help on taking actions after each spec.
 
+A complement can be defined with the syntax `finally_`, the underscore
+is also optional here.
 
-# Spec mocks
+### Examples:
+
+```python
+def ensuring_some_class(spec):
+    u"The class Foobar"
+    spec.foobar = Foobar()
+
+def ensure_it_has_a_method_that_prints(spec):
+    "its method '.uppercase(string)' takes a string and makes it supercased"
+    spec.foobar.uppercase("foo").should.equal("FOO")
+
+def finally_clean_up_the_unecessary_memory(spec):
+    "Cleaning up unecessary instances"
+
+    del spec.foobar
+```
+
+# Spec mocks (todo)...
 
     return_value = module_being_tested.some_method(spec.mock.sys)
 
