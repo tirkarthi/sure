@@ -28,6 +28,9 @@ behavior unit is important.
 
 ## Behavior units
 
+*Simplicity is the ultimate sophistication.*
+*— Leonardo Da Vinci*
+
 Unit tests by definition test small units of code, and because of that
 then can't perform any sort of I/O (i.e: database access).
 
