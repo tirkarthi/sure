@@ -28,8 +28,9 @@ behavior unit is important.
 
 ## Behavior units
 
-*Simplicity is the ultimate sophistication.*
-*— Leonardo Da Vinci*
+
+    Simplicity is the ultimate sophistication.
+                          — Leonardo Da Vinci
 
 Unit tests by definition test small units of code, and because of that
 then can't perform any sort of I/O (i.e: database access).
@@ -196,10 +197,14 @@ one of them is `spec.mock`.
 follows:
 
 ```python
+
+def print_green(fd, text):
+    fd.write("\033[1;32m{}\033[0m\n".format(text))
+
 def ensure_print_green_behavior(spec)
     "the function `print_green` prints ANSI green colored strings in a file-like object"
 
-    show(spec.mock.file, "some string")
+    print_green(spec.mock.file, "some string")
 
-    spec.mock.file.write.assert_called_once_with(\033[1;32m"some string\033[0m\n")
+    spec.mock.file.write.assert_called_once_with("\033[1;32msome string\033[0m\n")
 ```
