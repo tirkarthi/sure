@@ -6,21 +6,21 @@ Its main goal is to leverage fluency and expressivity while writing
 automated tests in the python programming language.
 
 Sure enforces some software engineering techniques to make the
-destination code more decoupled and clean. Mostly through testing
+destination code cleaner and more decoupled. Mostly through testing
 small units of logic.
 
-It is known that code written through
+Code written through
 [TDD](http://en.wikipedia.org/wiki/Test-driven_development) can be a
 lot cleaner and more robust when covered with unit tests. Sure is an
 attempt to make writing unit tests a more pleasant experience for
 python developers.
 
-In sure tests tests are referred as "specifications" or "spec", and it
-is grouped in "suites" that are surrounded by actions taken before and/or
+In sure, tests are referred to as "specifications" or "spec", and are
+grouped in "suites" that are surrounded by actions taken before and/or
 after a set of tests (predicates and complements).
 
-Each specification is meant to test one single behavior unit. "Sure"
-is simply a python library so a developer could circunvent its
+Each specification is meant to test one single behavior unit. Because
+"Sure" is simply a library, a developer could certainly circumvent its
 proposed practices, but it's important to reinforce that a developer
 that is using sure to write its tests should be concerned about
 writing decoupled code, and therefore writing a single test per
@@ -32,7 +32,7 @@ behavior unit is important.
     Simplicity is the ultimate sophistication.
                           — Leonardo Da Vinci
 
-Unit tests by definition test small units of code, and because of that
+By definition, unit tests test small units of code, and because of that
 then can't perform any sort of I/O (i.e: database access).
 
 The side effect of shaping the code to be tested in smalled units is
@@ -61,9 +61,8 @@ if condition1 is True or condition2 is True:
    # run some algorithm
 ```
 
-In the code above if the condition1 is met, the behavior of the
-condition2 cannot be assured, and it must be tested in a separated
-specification.
+In the code above if the condition1 is met, the behavior of condition2
+cannot be assured, and it must be tested in a separated specification.
 
 It's important to have in mind that overachieving test coverage
 ultimately helps achieving true full test coverage and therefore
@@ -130,7 +129,7 @@ itself is an assertion library that
 Sometimes it might be useful to execute arbitrary python code before
 running specifications along with its expectations. Maybe classes must
 be instantiated, or a data store must be prepared, data fixtures setup
-or even something more laborated like spinning up a http server that
+or even something more elaborate like spinning up a http server that
 will serve fake data.
 
 In order to leverage this, sure also looks for python callables (just
@@ -141,7 +140,7 @@ This can be achieved through "predicates". Predicates are also python
 callables, but they are defined with a different prefix:
 `ensuring_`. The underscore is also optional in this case, and its
 code is executed before each specification. Many predicates might be
-defined per python file, they are executed in the same order they were
+defined per python file and are executed in the order they are
 declared.
 
 ### Examples:
