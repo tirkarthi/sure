@@ -1,0 +1,5 @@
+sure (1.4.1-1) jessie; urgency=low
+
+  * Packaged for debian
+
+ -- Timo Furrer <tuxtimo@gmail.com>  Wed, 22 Feb 2017 23:04:42 +0100
