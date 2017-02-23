@@ -11,10 +11,20 @@ Package: python-sure
 Architecture: all
 Depends: ${misc:Depends}, ${python:Depends}
 Description: idiomatic assertion toolkit with human-friendly failure messages (Python 2)
- Sure is a python library that leverages a DSL for writing assertions.
+ Sure is a library for Python that leverages a DSL for writing assertions. In
+ CPython it monkey-patches the object type, adding some methods and properties
+ purely for test purposes. Any Python code writen after "import sure" gains
+ testing superpowers.
+ .
+ This package contains the module for Python 2.x.
 
 Package: python3-sure
 Architecture: all
 Depends: ${misc:Depends}, ${python3:Depends}, python3-click
-Description: idiomatic assertion toolkit with human-friendly failure messages (Python 3)
- Sure is a python library that leverages a DSL for writing assertions.
+Description: idiomatic assertion toolkit with human-friendly failure messages - (Python 3)
+ Sure is a library for Python that leverages a DSL for writing assertions. In
+ CPython it monkey-patches the object type, adding some methods and properties
+ purely for test purposes. Any Python code writen after "import sure" gains
+ testing superpowers.
+ .
+ This package contains the module for Python 3.x.
