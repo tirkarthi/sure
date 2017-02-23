@@ -20,7 +20,7 @@ Description: idiomatic assertion toolkit with human-friendly failure messages (P
 
 Package: python3-sure
 Architecture: all
-Depends: ${misc:Depends}, ${python3:Depends}, python3-click
+Depends: ${misc:Depends}, ${python3:Depends}
 Description: idiomatic assertion toolkit with human-friendly failure messages - (Python 3)
  Sure is a library for Python that leverages a DSL for writing assertions. In
  CPython it monkey-patches the object type, adding some methods and properties
